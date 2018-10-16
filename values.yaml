@@ -189,33 +189,54 @@ controllercompliance:
   args:
   - "controller"
   - "compliance"
+  - "--verbose"
   clusterrole:
-    enabled: false
-  role:
     enabled: true
     rules:
+    - apiGroups:
+      - ""
+      resources:
+      - namespaces
+      verbs:
+      - get
+      - list
+    - apiGroups:
+      - apiextensions.k8s.io
+      resources:
+      - customresourcedefinitions
+      verbs:
+      - get
+      - create
+      - update
+      - list
+  role:
+    enabled: true
     rules:
     - apiGroups:
       - jenkins.io
       resources:
-        compliancechecks
+      - compliancechecks
       verbs:
       - get
       - create
       - update
       - watch
+      - list
     - apiGroups:
       - jenkins.io
       resources:
-        pipelineactivities
+      - pipelineactivities
       verbs:
       - get
     - apiGroups:
       - ""
       resources:
       - pods
+      - secrets
       verbs:
       - watch
+      - list
+      - get
       
 controllerrole:
   enabled: false
